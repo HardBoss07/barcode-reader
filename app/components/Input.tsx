@@ -5,7 +5,7 @@ interface InputProps {
     placeholder: string;
 }
 
-export default function Input({ label, value, onChange, placeholder }: InputProps) {
+export default function Input({label, value, onChange, placeholder}: InputProps) {
     return (
         <div className="flex flex-col space-y-2">
             <label className="text-sm font-medium text-gray-700">{label}</label>

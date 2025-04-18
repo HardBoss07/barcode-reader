@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
-import { BrowserMultiFormatReader } from '@zxing/library';
+import {useEffect, useState, useRef} from 'react';
+import {BrowserMultiFormatReader} from '@zxing/library';
 
 export default function Camera() {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -16,7 +16,7 @@ export default function Camera() {
             try {
                 const videoStream = await navigator.mediaDevices.getUserMedia({
                     audio: false,
-                    video: { facingMode: 'environment' },
+                    video: {facingMode: 'environment'},
                 });
 
                 if (videoRef.current) {
