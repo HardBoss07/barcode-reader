@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState, useRef } from "react";
-import { BrowserMultiFormatReader } from "@zxing/library";
+import { useEffect, useState, useRef } from 'react';
+import { BrowserMultiFormatReader } from '@zxing/library';
 
 export default function Camera() {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -43,24 +43,26 @@ export default function Camera() {
             if (videoRef.current?.srcObject) {
                 (videoRef.current.srcObject as MediaStream)
                     .getTracks()
-                    .forEach(track => track.stop());
+                    .forEach((track) => track.stop());
             }
         };
     }, []);
 
     return (
-        <div>
-            {error && <p className="text-red-600">{error}</p>}
-            <h1>Camera input:</h1>
+        <div className="flex flex-col items-center">
+            {error && <p className="text-red-600 mb-4">{error}</p>}
+            <h2 className="text-lg font-medium mb-2">Camera Input</h2>
             <video
                 ref={videoRef}
                 autoPlay
                 playsInline
-                className="w-full max-w-md h-auto border rounded"
+                className="w-full max-w-md h-auto border border-gray-300 rounded-lg shadow-sm"
             />
-            <div className="mt-4 p-2 bg-green-100 text-green-800 rounded">
-                <strong>Scanned Barcode:</strong> {barcode}
-            </div>
+            {barcode && (
+                <div className="mt-4 p-3 bg-green-100 text-green-800 rounded-lg w-full text-center">
+                    <strong>Scanned Barcode:</strong> {barcode}
+                </div>
+            )}
         </div>
     );
 }
