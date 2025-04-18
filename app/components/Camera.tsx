@@ -14,23 +14,32 @@ export default function Camera() {
 
         const getCameraStream = async () => {
             try {
-                const videoStream = await navigator.mediaDevices.getUserMedia({
+                console.log('Requesting camera access...');
+                const constraints = {
                     audio: false,
-                    video: {facingMode: 'environment'},
-                });
+                    video: {
+                        facingMode: { ideal: 'environment' },
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    }
+                };
+
+                const videoStream = await navigator.mediaDevices.getUserMedia(constraints);
+                console.log('Camera stream obtained:', videoStream);
 
                 if (videoRef.current) {
                     videoRef.current.srcObject = videoStream;
 
-                    codeReader.decodeFromVideoDevice(null, videoRef.current, (result, e) => {
+                    codeReader.decodeFromVideoDevice(null, videoRef.current, (result, err) => {
                         if (active && result) {
-                            console.log(result);
+                            console.log('Barcode detected:', result.getText());
                             setBarcode(result.getText());
                         }
                     });
                 }
-            } catch (e) {
-                setError('Unable to access camera: ' + (e as Error).message);
+            } catch (e: any) {
+                console.error('Camera access failed:', e.name, e.message);
+                setError('Camera access failed: ' + e.name + ' – ' + e.message);
             }
         };
 
