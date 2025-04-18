@@ -1,6 +1,6 @@
 'use client';
 
-import Barcode from '../components/Barcode';
+import Barcode from '@/app/components/Barcode';
 import {useRef, useState} from 'react';
 import Input from '@/app/components/Input';
 import Header from "@/app/components/Header";
