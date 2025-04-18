@@ -1,14 +1,14 @@
 'use client';
 
 import JsBarcode from "jsbarcode";
-import { useEffect, useRef } from "react";
+import {useEffect, useRef} from "react";
 
 interface BarCodeProps {
     value: string;
     onRendered?: (canvas: HTMLCanvasElement) => void;
 }
 
-export default function BarCode({ value, onRendered }: BarCodeProps) {
+export default function BarCode({value, onRendered}: BarCodeProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
@@ -28,5 +28,5 @@ export default function BarCode({ value, onRendered }: BarCodeProps) {
         }
     }, [value, onRendered]);
 
-    return <canvas ref={canvasRef}></canvas>;
+    return <canvas ref={canvasRef} className="w-full h-auto"></canvas>;
 }
