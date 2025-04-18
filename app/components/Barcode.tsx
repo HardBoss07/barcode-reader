@@ -5,14 +5,15 @@ import { useEffect, useRef } from "react";
 
 interface BarCodeProps {
     value: string;
+    onRendered?: (canvas: HTMLCanvasElement) => void;
 }
 
-export default function BarCode({ value }: BarCodeProps) {
-    const svgRef = useRef<SVGSVGElement>(null);
+export default function BarCode({ value, onRendered }: BarCodeProps) {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
-        if (svgRef.current) {
-            JsBarcode(svgRef.current, value, {
+        if (canvasRef.current) {
+            JsBarcode(canvasRef.current, value, {
                 format: 'CODE128',
                 displayValue: true,
                 lineColor: '#000000',
@@ -20,8 +21,12 @@ export default function BarCode({ value }: BarCodeProps) {
                 height: 100,
                 margin: 10,
             });
-        }
-    }, [value]);
 
-    return <svg ref={svgRef}></svg>;
+            if (onRendered) {
+                onRendered(canvasRef.current);
+            }
+        }
+    }, [value, onRendered]);
+
+    return <canvas ref={canvasRef}></canvas>;
 }

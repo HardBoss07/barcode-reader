@@ -1,21 +1,31 @@
 "use client";
 
 import Barcode from '../components/Barcode';
-import {useState} from "react";
+import {useRef, useState} from "react";
 import Input from "@/app/components/Input";
 
 export default function Generate() {
     const [value, setValue] = useState<string>("Enter your Barcode");
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-    const handeValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
-    }
+    };
 
+    const handleDownload = () => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = `barcode-${value}.png`;
+        link.click();
+    };
     return (
         <div>
-            <h1>1D Barcode Example</h1>
-            <Input label="Enter Barcode" value={value} onChange={handeValueChange} />
-            <Barcode value={value} />
+            <Input label="Enter Barcode" value={value} onChange={handleValueChange} />
+            <Barcode value={value} onRendered={canvas => (canvasRef.current = canvas)} />
+            <button onClick={handleDownload}>Download Barcode</button>
         </div>
     );
 }
