@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Header from "@/app/components/Header";
+import {GeneratorIcon} from "@/app/components/GeneratorIcon";
 
 export default function Home() {
     return (
@@ -13,13 +14,7 @@ export default function Home() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-2xl">
                     <a href="./generate"
                        className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition">
-                        <Image
-                            src="/generator.png"
-                            alt="Generator"
-                            width={359}
-                            height={317}
-                            className="w-full h-auto object-cover"
-                        />
+                        <GeneratorIcon/>
                         <div className="p-4 text-center text-lg font-semibold">Generator</div>
                     </a>
 

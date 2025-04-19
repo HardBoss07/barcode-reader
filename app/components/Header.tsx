@@ -13,7 +13,7 @@ export default function Header({currentPage}: HeaderProps) {
                     {headerItems.map((item, index) => (
                         <li key={index}>
                             <a
-                                href={`${index === 0 ? "../" : item.toLowerCase()}`}
+                                href={`${index === 0 ? "/" : item.toLowerCase()}`}
                                 className={`text-lg font-bold no-underline transition-colors duration-300 ease-in-out ${
                                     currentPage === index ? "text-[#242424]" : "text-[#FFEDFB] hover:text-[#242424]"
                                 }`}
