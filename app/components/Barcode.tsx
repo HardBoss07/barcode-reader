@@ -1,32 +1,44 @@
-'use client';
-
-import JsBarcode from "jsbarcode";
-import {useEffect, useRef} from "react";
+import bwipjs from "bwip-js/browser";
+import {useEffect, useRef, useState} from "react";
 
 interface BarCodeProps {
+    chosenOption: string;
     value: string;
     onRendered?: (canvas: HTMLCanvasElement) => void;
 }
 
-export default function BarCode({value, onRendered}: BarCodeProps) {
+export default function BarCode({chosenOption, value, onRendered}: BarCodeProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (canvasRef.current) {
-            JsBarcode(canvasRef.current, value, {
-                format: 'CODE128',
-                displayValue: true,
-                lineColor: '#000000',
-                width: 2,
-                height: 100,
-                margin: 10,
-            });
+        setError(null);
+        if (!canvasRef.current) return;
 
+        try {
+            bwipjs.toCanvas(canvasRef.current, {
+                bcid: chosenOption,
+                text: value,
+                scale: 3,
+                includetext: true,
+                textxalign: 'center',
+            });
             if (onRendered) {
                 onRendered(canvasRef.current);
             }
+        } catch (e: any) {
+            console.error("Barcode generation error:", e);
+            setError(e.message || 'Failed to generate barcode.');
         }
-    }, [value, onRendered]);
+    }, [value, chosenOption, onRendered])
 
-    return <canvas ref={canvasRef} className="w-full h-auto"></canvas>;
+    return (
+        <div className="w-full h-auto border rounded-lg p-4 bg-white flex items-center justify-center">
+            {error ? (
+                <p className="text-red-500 text-center text-sm font-medium">{error}</p>
+            ) : (
+                <canvas ref={canvasRef} className="w-full h-auto" />
+            )}
+        </div>
+    );
 }
