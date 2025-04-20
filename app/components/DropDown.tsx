@@ -19,7 +19,7 @@ export default function DropDown({label, chosenOption, onChange}: DropDownProps)
     };
 
     return (
-        <div>
+        <div className="flex flex-col space-y-2">
             <label className="text-sm font-medium text-gray-700">{label}</label>
 
             <select name={label} value={chosenOption} onChange={onChange} className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
