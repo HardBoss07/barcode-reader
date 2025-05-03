@@ -2,8 +2,15 @@ interface HeaderProps {
     currentPage: number;
 }
 
-export default function Header({currentPage}: HeaderProps) {
+export default function Header({ currentPage }: HeaderProps) {
     const headerItems = ["Home", "Generate", "Read"];
+    const isGitHubPages = true;
+    const prefix = "barcode-reader";
+
+    const getHref = (index: number, item: string) => {
+        const basePath = index === 0 ? "/" : `/${item.toLowerCase()}`;
+        return isGitHubPages ? `/${prefix}${basePath}` : basePath;
+    };
 
     return (
         <header className="bg-[#F207A8] p-7 pb-1.5 shadow-md">
@@ -13,9 +20,11 @@ export default function Header({currentPage}: HeaderProps) {
                     {headerItems.map((item, index) => (
                         <li key={index}>
                             <a
-                                href={`${index === 0 ? "/" : item.toLowerCase()}`}
+                                href={getHref(index, item)}
                                 className={`text-lg font-bold no-underline transition-colors duration-300 ease-in-out ${
-                                    currentPage === index ? "text-[#242424]" : "text-[#FFEDFB] hover:text-[#242424]"
+                                    currentPage === index
+                                        ? "text-[#242424]"
+                                        : "text-[#FFEDFB] hover:text-[#242424]"
                                 }`}
                             >
                                 {item}
