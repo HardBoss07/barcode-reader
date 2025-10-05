@@ -4,7 +4,7 @@ interface HeaderProps {
 
 export default function Header({ currentPage }: HeaderProps) {
     const headerItems = ["Home", "Generate", "Read"];
-    const isGitHubPages = true;
+    const isGitHubPages = false;
     const prefix = "barcode-reader";
 
     const getHref = (index: number, item: string) => {
